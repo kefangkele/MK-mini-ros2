@@ -4,9 +4,9 @@
 
 ## 1.环境确认：
 ####      1.1、系统：
-            Ubuntu 16.04 / Ubuntu 18.04
+            Ubuntu 22.04
 ####      1.2、ROS版本：
-            Kinetic / Melodic
+            Humble
 
 ## 2.电脑，工控机开机设置
 ####      2.1、rc.local文件确认：
@@ -51,27 +51,27 @@
 
 ![](https://github.com/kefangkele/MK-mini-ros2/blob/main/images/candump_print.png?raw=true)
 
-## 5.ROS驱动包运行
+## 5.ROS2驱动包运行
 ####      5.1、文件结构：
       
 ![](https://github.com/kefangkele/MK-mini-ros2/blob/main/images/doc_tree.png?raw=true)
 
 ####      5.2、编译工作空间：
             在你的工作空间中打开终端/在终端中进入你的工作空间，让终端处于工作空间级，再执行指令：
-            catkin build
+            colcon build
 ####      5.3、设置临时环境变量：
             在要运行程序的终端中执行指令：
-            source ~/你的工作空间(例：5.1-ros2_ws)/devel/setup.bash
+            source ~/你的工作空间(例：5.1-ros2_ws)/install/setup.bash
             
             或者让要运行程序的终端处于工作空间级，执行指令：
-            source devel/setup.bash
+            source install/setup.bash
             
 ![](https://github.com/kefangkele/MK-mini-ros2/blob/main/images/source.png?raw=true)
 
-####      5.4、ROS驱动启动：
+####      5.4、ROS2驱动启动：
             在你刚才输入了临时环境变量的终端中执行指令：
-            roslaunch yhs_can_control yhs_can_control.launch
-            
+            ros2 launch yhs_can_control yhs_can_control.launch.py
+![](https://github.com/kefangkele/MK-mini-ros2/blob/main/images/launch.png?raw=true)
             
 ####      5.5、终端打印出的运行成功信息：
 
@@ -80,19 +80,14 @@
 ## 6.运动测试：
 ####       6.1、在测试之前，建议先把车架起来，或者向底盘下发较小的速度，例如0.03。
 ####       6.2、打开新的终端，进入你的工作空间目录(例：5.1-ros2_ws)，执行指令
-                        source devel/setup.bash
+                        source install/setup.bash
                    或者不进人工作空间目录，执行指令
-                        source ~/你的工作空间(例：5.1-ros2_ws)/devel/setup.bash
-####       6.3、查看话题数据
-                        rostopic echo /ctrl_fb
-####       6.4、执行完6.3的指令后在终端看到反馈的数据不断刷新，说明ROS驱动包运行正常。
-####       6.5、下发指令控制底盘运动
+                        source ~/你的工作空间(例：5.1-ros2_ws)/install/setup.bash
+####       6.3、下发指令控制底盘运动
               6.5.1、打开新的终端，进入你的工作空间目录，设置临时环境变量：
-                        source devel/setup.bash
+                        source install/setup.bash
                      或者不进人工作空间目录，执行指令
-                        source ~/你的工作空间(例：5.1-ros2_ws)/devel/setup.bash
-              6.5.2、此处指令不执行，先输入终端
-                        rostopic  pub  -r  100  /ctrl_cmd
-              6.5.3、后面的内容可以按tab键补全，补全之后，要输入档位、速度和转向角，注意角度的单位是度不是弧度，输入完成后敲回车，将遥控器切换到自动挡，这时候就可以看到CAN卡上的红色和蓝色灯都在闪烁，底盘开始运动。
-      
-      
+                        source ~/你的工作空间名(例：5.1-ros2_ws)/install/setup.bash
+              6.5.2、在设置了临时环境变量的终端，使用rqt_publisher工具，遥控器要切换到指令控制模式
+                        ros2 run rqt_publisher rqt_publisher
+![](https://github.com/kefangkele/MK-mini-ros2/blob/main/images/rqt_tool.png?raw=true)
